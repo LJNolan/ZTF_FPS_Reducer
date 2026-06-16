@@ -14,8 +14,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy.coordinates import SkyCoord
 import astropy.units as u
-import os
-from supernolan import quick_hist, quick_scatter, get_cbcc
+from supernolan import get_cbcc
 
 
 colnames = [
@@ -456,28 +455,6 @@ for f in files:
    ra_dec_list.append((ra, dec))
    jds_jde_list.append((jds, jde))
 
-# =============================================================================
-# # Check for duplicates (there are none)
-# dup_df = group_ra_dec(ra_dec_list, tol=0.1*u.arcsec)
-# dup_only = dup_df[dup_df["count"] > 1].reset_index(drop=True)
-# print(dup_df.head())
-# =============================================================================
-
-# =============================================================================
-# # Check for missing targets
-# true_tab = pd.read_csv('targets_bkp.txt', names=['RA', 'DEC', 'JDS', 'JDE'],
-#                        sep=' ')
-# true_tab.sort_values('JDS', inplace=True) # ensure sorting by start time
-# ra_dec_true = list(zip(true_tab['RA'].to_list(), true_tab['DEC'].to_list()))
-# jds_jde_true = list(zip(true_tab['JDS'].to_list(), true_tab['JDE'].to_list()))
-# missing_df = find_missing_pairs(ra_dec_true, ra_dec_list, jds_jde_true,
-#                                 tol=0.1*u.arcsec)
-# missing_df = missing_df[['ra_true', 'dec_true', 'jdstart', 'jdend']]
-# missing_df.to_csv("targets.txt",
-#                   sep=" ",
-#                   header=False,
-#                   index=False)
-# =============================================================================
 
 # Useful later for S6.2...
 # Pull peaks and sort
@@ -493,13 +470,5 @@ files = [str(f) for f in files]
 for n, file in enumerate(files):
    output_name = file.replace("batchfp_", "reduced/").replace(".txt",
                                                      "_calibrated.csv")
-   # Uncomment the following line and delete everything else for reduction
-   #ztf_fp_reduction(file, peak=peaks[n], output_name=output_name)
-   if n % 100 == 0:
-      calib_plot(output_name, peaks[n])
-
-i = 996
-file, peak = files[i], peaks[i]
-file = file.replace("batchfp_", "reduced/").replace(".txt", "_calibrated.csv")
-#calib_plot(file, peak)
+   ztf_fp_reduction(file, peak=peaks[n], output_name=output_name)
 
