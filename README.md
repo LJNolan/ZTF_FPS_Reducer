@@ -1,0 +1,1 @@
+Code used in Nolan et al. 2026 for Zwicky Transient Facility Forced Photometry Service data reduction to obtain calibrated magnitudes.  Work-in-progress shared for the Supermassive Black Holes and Blue Notes conference.  Full project code and documentation will be made available in a separate repository after publication, and linked here.
